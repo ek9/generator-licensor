@@ -1,6 +1,6 @@
 {
   "name": "generator-licensor",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "License source code and creative works with Yeoman Licensor",
   "homepage": "https://github.com/ek9/generator-licensor",
   "author": {
