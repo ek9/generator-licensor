@@ -6,7 +6,7 @@ in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## UNRELEASED
+## 0.0.1 - 2017-01-22
 
 - Add basic functionality to license source code and creative works by using
   Open Source and/or Creative Commons licenses. This functionality comes from
