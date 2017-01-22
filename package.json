@@ -1,7 +1,7 @@
 {
   "name": "generator-licensor",
   "version": "0.0.0",
-  "description": "License source code and creative work with Yeoman Licensor",
+  "description": "License source code and creative works with Yeoman Licensor",
   "homepage": "https://github.com/ek9/generator-licensor",
   "author": {
     "name": "ek9",
@@ -9,9 +9,9 @@
     "url": "https://ek9.co"
   },
   "files": [
-    "generators"
+    "app"
   ],
-  "main": "generators/app/index.js",
+  "main": "app/index.js",
   "keywords": [
     "yeaman-generator",
     "yeoman",
@@ -45,7 +45,7 @@
   "dependencies": {
     "chalk": "^1.1.3",
     "generator-license": "^5.1.0",
-    "generator-license-cc": "git://github.com/ek9/generator-license-cc#master",
+    "generator-license-cc": "^1.1.0",
     "yeoman-generator": "^1.0.1",
     "yosay": "^1.2.1"
   },

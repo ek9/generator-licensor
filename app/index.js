@@ -62,7 +62,7 @@ module.exports = Generator.extend({
     },
 
     doLicenseSourceCode() {
-      if (true === this.options.qSourceCode.hasSourceCode) {
+      if (this.options.qSourceCode.hasSourceCode === true) {
         this.log(yosay(
           'Generating LICENSE for ' + chalk.red.underline('Source Code') + '!'
         ));
@@ -77,19 +77,19 @@ module.exports = Generator.extend({
     },
 
     qSourceWithCreative() {
-      if (true === this.options.qSourceCode.hasSourceCode) {
+      if (this.options.qSourceCode.hasSourceCode === true) {
         var prompts = [
           {
             type: 'confirm',
             name: 'hasCreativeWork',
             message: 'Does your software project include other ' + chalk.underline('creative work') + ' (i.e. documentation, media files, tutorials) that you want to license under an appropriate license?',
-            default: true,
+            default: true
           },
           {
-            name: 'title',
+            name: 'creativeWork',
             message: 'Title of Creative Work (i.e. ProjectX Documentation, Media files in the repository, Data in the archives):',
             when: function (answers) {
-              return true === answers.hasCreativeWork
+              return answers.hasCreativeWork === true;
             }
           },
           {
@@ -97,7 +97,7 @@ module.exports = Generator.extend({
             message: 'Main directory where Creative Work is stored (i.e. ' + chalk.underline('docs/') + ', ' + chalk.underline('music/') + ', ' + chalk.underline('data/') + '):',
             default: 'docs/',
             when: function (answers) {
-              return true === answers.hasCreativeWork
+              return answers.hasCreativeWork === true;
             }
           }
         ];
@@ -116,13 +116,13 @@ module.exports = Generator.extend({
           name: 'hasCreativeWork',
           message: 'Do you want to license ' + chalk.underline('creative work') + ' (i.e. audio/video files, written matterial, database data)?',
           default: true,
-          when: false === this.options.qSourceCode.hasSourceCode
+          when: this.options.qSourceCode.hasSourceCode === false
         },
         {
-          name: 'title',
+          name: 'creativeWork',
           message: 'Title of creative work (i.e. "Loud Song" Remix, Cat Video, "Book of Knowledge", Map of local coffeeshops):',
           when: function (answers) {
-            return true === answers.hasCreativeWork
+            return answers.hasCreativeWork === true;
           }
         }
       ];
@@ -135,43 +135,64 @@ module.exports = Generator.extend({
 
     qCreativeWorkAuthor() {
       // only prompt this if it wasn't already answered and is required
-      if (false === this.options.qSourceCode.hasSourceCode
-        && true === this.options.qCreativeWork.hasCreativeWork) {
+      if (this.options.qSourceCode.hasSourceCode === false &&
+      this.options.qCreativeWork.hasCreativeWork === true) {
+        var prompts = authorPrompts;
 
-          var prompts = authorPrompts;
-
-          return this.prompt(prompts).then(function (answers) {
-            // To access props later use this.props.someAnswer;
-            this.options.qCreativeWorkAuthor = answers;
-          }.bind(this));
-        }
+        return this.prompt(prompts).then(function (answers) {
+          // To access props later use this.props.someAnswer;
+          this.options.qCreativeWorkAuthor = answers;
+        }.bind(this));
+      }
     },
 
-    licenseCreativeWorkWithSourceCode() {
-      if (true === this.options.qSourceCode.hasSourceCode
-        && true === this.options.qSourceWithCreative.hasCreativeWork) {
+    licenseSourceCodeWithCreativeWork() {
+      if (this.options.qSourceCode.hasSourceCode === true &&
+      this.options.qSourceWithCreative.hasCreativeWork === true) {
+        this.composeWith(require.resolve('generator-license/app'), {
+          name: this.options.qSourceCodeAuthor.name,
+          email: this.options.qSourceCodeAuthor.email,
+          website: this.options.qSourceCodeAuthor.website,
+          year: this.options.qSourceCodeAuthor.year,
+          licensePrompt: 'Choose a license for source code:'
+        });
 
-          var output_file = this.options.qSourceWithCreative.ccDir + '/LICENSE';
+        var outputFile = this.options.qSourceWithCreative.ccDir + '/LICENSE';
 
-          this.composeWith(require.resolve('generator-license-cc/generators/app'), {
-            name: this.options.qSourceCodeAuthor.name,
-            work: this.options.qSourceWithCreative.title,
-            email: this.options.qSourceCodeAuthor.email,
-            website: this.options.qSourceCodeAuthor.website,
-            year: this.options.qSourceCodeAuthor.year,
-            output: output_file
-          });
-        }
+        this.composeWith(require.resolve('generator-license-cc/app'), {
+          name: this.options.qSourceCodeAuthor.name,
+          ccWork: this.options.qCreativeWork.creativeWork,
+          email: this.options.qSourceCodeAuthor.email,
+          website: this.options.qSourceCodeAuthor.website,
+          year: this.options.qSourceCodeAuthor.year,
+          licensePrompt: 'Choose a license for creative work:',
+          output: outputFile
+        });
+      }
+    },
+
+    licenseSourceCodeOnly() {
+      if (this.options.qSourceCode.hasSourceCode === true &&
+      this.options.qSourceWithCreative.hasCreativeWork === false) {
+        this.composeWith(require.resolve('generator-license/app'), {
+          name: this.options.qSourceCodeAuthor.name,
+          email: this.options.qSourceCodeAuthor.email,
+          website: this.options.qSourceCodeAuthor.website,
+          year: this.options.qSourceCodeAuthor.year,
+          licensePrompt: 'Choose a license for source code:'
+        });
+      }
     },
 
     licenseCreativeWorkOnly() {
       if (this.options.qCreativeWork.hasCreativeWork) {
-        this.composeWith(require.resolve('generator-license-cc/generators/app'), {
+        this.composeWith(require.resolve('generator-license-cc/app'), {
           name: this.options.qCreativeWorkAuthor.name,
-          work: this.options.qCreativeWork.title,
+          ccWork: this.options.qCreativeWork.creativeWork,
           email: this.options.qCreativeWorkAuthor.email,
           website: this.options.qCreativeWorkAuthor.website,
           year: this.options.qCreativeWorkAuthor.year,
+          licensePrompt: 'Choose a license for creative work:',
           output: 'LICENSE'
         });
       }
@@ -182,6 +203,5 @@ module.exports = Generator.extend({
   },
 
   install: function () {
-    //this.installDependencies();
   }
 });
