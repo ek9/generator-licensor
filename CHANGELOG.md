@@ -6,6 +6,10 @@ in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.0.2 - 2017-01-24
+
+- Fix keywords in `package.json` so generator appears on `yeoman.io`.
+
 ## 0.0.1 - 2017-01-22
 
 - Add basic functionality to license source code and creative works by using
