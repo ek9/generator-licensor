@@ -6,11 +6,15 @@ in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.0.2 - 2017-01-24
+## [UNRELEASED]
+
+- Fix double source code license prompt when generating dual licenses.
+
+## [0.0.2] - 2017-01-24
 
 - Fix keywords in `package.json` so generator appears on `yeoman.io`.
 
-## 0.0.1 - 2017-01-22
+## [0.0.1] - 2017-01-22
 
 - Add basic functionality to license source code and creative works by using
   Open Source and/or Creative Commons licenses. This functionality comes from
@@ -24,4 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Source Code + Creative works (Open Source License + Creative Commons
       License)
 
+[UNRELEASED]: https://github.com/ek9/generator-licensor/compare/v0.0.2...HEAD
+[0.0.2]: https://github.com/ek9/generator-licensor/releases/tag/v0.0.2
+[0.0.1]: https://github.com/ek9/generator-licensor/releases/tag/v0.0.1
 [0]: https://github.com/ek9/generator-licensor
