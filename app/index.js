@@ -185,7 +185,9 @@ module.exports = Generator.extend({
     },
 
     licenseCreativeWorkOnly() {
-      if (this.options.qCreativeWork.hasCreativeWork) {
+      if (this.options.qSourceCode.hasSourceCode === false &&
+        this.options.qCreativeWork.hasCreativeWork === true) {
+
         this.composeWith(require.resolve('generator-license-cc/app'), {
           name: this.options.qCreativeWorkAuthor.name,
           ccWork: this.options.qCreativeWork.creativeWork,
